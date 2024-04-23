@@ -1,10 +1,18 @@
 ---
 
-- name: Install required apt packages
+- name: Install required packages for distros that use apt package manager
   become: yes
   apt:
     name: git
     state: present
+  when: ansible_pkg_mgr == 'apt'
+
+- name: Install required packages for distros that use dnf package manager
+  become: yes
+  dnf:
+    name: git
+    state: present
+  when: ansible_pkg_mgr == 'dnf'
 
 - name: Check if mailcow installation directory exists
   become: yes
